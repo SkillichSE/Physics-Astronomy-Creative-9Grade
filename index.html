@@ -37,12 +37,17 @@ th{font-weight:300;color:var(--mute);font-size:11px;letter-spacing:.18em;text-tr
 td:first-child{font-weight:400}
 .rocket{display:flex;flex-direction:column;align-items:center;gap:10px}
 .rocket svg{width:min(110px,30vw);height:auto;flex:none}
+.txt{position:relative}
+.lineup{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.lineup svg{display:block;min-width:720px;width:100%;height:auto}
 .note{color:var(--mute);font-size:14px}
 footer{border-top:1px solid var(--line);padding:28px 20px;color:var(--mute);font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-align:center}
 @media(min-width:800px){
 header{padding-left:32px;padding-right:32px}
-.hero{padding:100px 40px 10vh}
-#map{align-self:flex-end;margin-bottom:-4vh}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:40px;padding:100px 48px 6vh}
+.hero .txt{align-self:end;padding-bottom:4vh}
+#map{max-width:none;margin:0;align-self:center}
+section.wide{grid-template-columns:minmax(0,1fr)}
 section{padding:96px 32px;grid-template-columns:240px minmax(0,1fr);gap:48px}
 .rocket{flex-direction:row;justify-content:flex-start;gap:48px}
 }
@@ -72,7 +77,7 @@ nav{display:none}
 </defs>
 </svg>
 
-<header><b>Ursa Minor</b><nav><a href="#mif">Миф</a><a href="#fizika">Физика</a><a href="#zvezdy">Звёзды</a><a href="#kosmos">Космос</a></nav></header>
+<header><b>Ursa Minor</b><nav><a href="#mif">Миф</a><a href="#fizika">Физика</a><a href="#zvezdy">Звёзды</a><a href="#kosmos">Космос</a><a href="#rakety">Ракеты</a></nav></header>
 
 <div class="hero">
 <canvas id="sky"></canvas>
@@ -83,16 +88,16 @@ nav{display:none}
 <path id="trail" d="M50 242 C 28 170 34 105 56 62" pathLength="1" stroke="#ff8a3d" stroke-width="1.5" stroke-dasharray="1" stroke-dashoffset="1" fill="none"><animate attributeName="stroke-dashoffset" from="1" to="0" dur="4.5s" begin="0.5s" fill="freeze"/></path>
 <g fill="#fff"><circle cx="105" cy="66" r="3"/><circle cx="145" cy="74" r="3"/><circle cx="180" cy="86" r="3.5"/><circle cx="178" cy="122" r="3.5"/><circle cx="232" cy="130" r="4"/><circle cx="244" cy="92" r="5"/><circle cx="60" cy="50" r="6"/></g>
 <circle cx="60" cy="50" r="6" fill="none" stroke="#fff"><animate attributeName="r" values="6;24" dur="1.6s" begin="5s" repeatCount="2"/><animate attributeName="opacity" values="1;0" dur="1.6s" begin="5s" repeatCount="2"/></circle>
-<g fill="#8c93a3" font-size="9" font-family="Exo 2,sans-serif"><text x="74" y="42">ПОЛЯРНАЯ</text><text x="250" y="88">КОХАБ</text><text x="206" y="148">ФЕРКАД</text></g>
+<g fill="#8c93a3" font-size="11" font-family="Exo 2,sans-serif"><text x="74" y="42">ПОЛЯРНАЯ</text><text x="250" y="88">КОХАБ</text><text x="206" y="148">ФЕРКАД</text></g>
 <g>
 <animate attributeName="opacity" from="1" to="0" dur=".4s" begin="4.7s" fill="freeze"/>
 <animateMotion dur="4.5s" begin="0.5s" fill="freeze" rotate="auto"><mpath href="#trail"/></animateMotion>
-<use href="#rocket" x="-58" y="-14" width="108" height="28" transform="scale(.6)"/>
+<use href="#rocket" x="-58" y="-14" width="108" height="28" transform="scale(.9)"/>
 </g>
 </svg>
-<h1>Малая<br>Медведица</h1>
+<div class="txt"><h1>Малая<br>Медведица</h1>
 <p>Макет созвездия. Семь звёзд, одна из них показывает на север.</p>
-<div class="row"><a class="btn" href="#mif">Смотреть</a><button class="btn" id="again" type="button">Повторить запуск</button></div>
+<div class="row"><a class="btn" href="#mif">Смотреть</a></div></div>
 </div>
 
 <section id="mif"><h2>Миф</h2><div>
@@ -122,11 +127,23 @@ nav{display:none}
 </table>
 <p class="note" style="margin-top:12px">Расстояния приблизительные.</p></div></section>
 
-<section id="kosmos"><h2>Космос</h2><div class="rocket">
-<svg viewBox="-20 -80 40 160" role="img" aria-label="Ракета"><use href="#rocket" x="-58" y="-14" width="108" height="28" transform="translate(0 10) rotate(-90) scale(1.5)"/></svg>
-<div>
+<section id="kosmos"><h2>Космос</h2><div>
 <p class="big">Космические аппараты тоже ориентируются по звёздам.</p>
-<p>Звёздный датчик снимает участок неба и сравнивает его с каталогом. Так аппарат узнаёт, как он повёрнут. Звёзды очень далеки, поэтому для навигации они неподвижны, как маяки. Идея та же, что у моряков с Полярной.</p></div></div></section>
+<p>Звёздный датчик снимает участок неба и сравнивает его с каталогом. Так аппарат узнаёт, как он повёрнут. Звёзды очень далеки, поэтому для навигации они неподвижны, как маяки. Идея та же, что у моряков с Полярной.</p></div></section>
+
+<section class="wide" id="rakety"><h2>Ракеты</h2><div>
+<p class="big">Пять ракет в одном масштабе. Оранжевая фигурка слева: человек ростом 1,8 м.</p>
+<div class="lineup"><svg viewBox="0 -114 114 126" role="img" aria-label="Сравнение высоты ракет в одном масштабе" font-family="Exo 2,sans-serif"><path d="M6 -10 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-9.1" text-anchor="end" fill="#8c93a3" font-size="2.4">10 м</text><path d="M6 -20 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-19.1" text-anchor="end" fill="#8c93a3" font-size="2.4">20 м</text><path d="M6 -30 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-29.1" text-anchor="end" fill="#8c93a3" font-size="2.4">30 м</text><path d="M6 -40 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-39.1" text-anchor="end" fill="#8c93a3" font-size="2.4">40 м</text><path d="M6 -50 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-49.1" text-anchor="end" fill="#8c93a3" font-size="2.4">50 м</text><path d="M6 -60 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-59.1" text-anchor="end" fill="#8c93a3" font-size="2.4">60 м</text><path d="M6 -70 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-69.1" text-anchor="end" fill="#8c93a3" font-size="2.4">70 м</text><path d="M6 -80 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-79.1" text-anchor="end" fill="#8c93a3" font-size="2.4">80 м</text><path d="M6 -90 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-89.1" text-anchor="end" fill="#8c93a3" font-size="2.4">90 м</text><path d="M6 -100 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-99.1" text-anchor="end" fill="#8c93a3" font-size="2.4">100 м</text><path d="M6 -110 H112" stroke="rgba(255,255,255,.14)" stroke-width=".15"/><text x="5" y="-109.1" text-anchor="end" fill="#8c93a3" font-size="2.4">110 м</text><path d="M6 0 H112" stroke="#8c93a3" stroke-width=".3"/><circle cx="7.6" cy="-1.55" r=".25" fill="#ff8a3d"/><path d="M7.6 -1.3 V-.6 M7.1 -1 H8.1 M7.6 -.6 L7.2 0 M7.6 -.6 L8 0" stroke="#ff8a3d" stroke-width=".18"/><g transform="translate(14 0)" stroke="#3a4152" stroke-width=".2"><path d="M-4.2 0 L-4.2 -14 L-2.85 -19.6 L-1.5 -14 L-1.5 0 Z" fill="#aeb5c4" stroke="#3a4152" stroke-width=".25"/><path d="M4.2 0 L4.2 -14 L2.85 -19.6 L1.5 -14 L1.5 0 Z" fill="#aeb5c4" stroke="#3a4152" stroke-width=".25"/><rect x="-1.5" y="-28" width="3" height="28" fill="#e8ebf2"/><rect x="-1.3" y="-34.5" width="2.6" height="6.5" fill="#aeb5c4"/><path d="M-1.3 -34.5 L1.3 -34.5 L1.3 -36 Q.8 -37.8 0 -38.4 Q-.8 -37.8 -1.3 -36 Z" fill="#e8ebf2"/></g><text x="14" y="4.6" text-anchor="middle" fill="#f2f4f8" font-size="2.7" font-weight="600">Восток</text><text x="14" y="8" text-anchor="middle" fill="#8c93a3" font-size="2.5">38 м</text><g transform="translate(36 0)" stroke="#3a4152" stroke-width=".2"><path d="M-4.2 0 L-4.2 -14 L-2.85 -19.6 L-1.5 -14 L-1.5 0 Z" fill="#aeb5c4" stroke="#3a4152" stroke-width=".25"/><path d="M4.2 0 L4.2 -14 L2.85 -19.6 L1.5 -14 L1.5 0 Z" fill="#aeb5c4" stroke="#3a4152" stroke-width=".25"/><rect x="-1.5" y="-27" width="3" height="27" fill="#e8ebf2"/><rect x="-1.33" y="-34" width="2.66" height="7" fill="#aeb5c4"/><path d="M-2.05 -34 L2.05 -34 L2.05 -40 Q2.05 -44.5 0 -46.3 Q-2.05 -44.5 -2.05 -40 Z" fill="#e8ebf2"/></g><text x="36" y="4.6" text-anchor="middle" fill="#f2f4f8" font-size="2.7" font-weight="600">Союз-2.1а</text><text x="36" y="8" text-anchor="middle" fill="#8c93a3" font-size="2.5">46 м</text><g transform="translate(58 0)" stroke="#3a4152" stroke-width=".2"><rect x="-3.7" y="-21" width="7.4" height="21" fill="#e8ebf2"/><path d="M-2.5 -21 V0" stroke="#aeb5c4" stroke-width=".3"/><path d="M-1.2 -21 V0" stroke="#aeb5c4" stroke-width=".3"/><path d="M0 -21 V0" stroke="#aeb5c4" stroke-width=".3"/><path d="M1.2 -21 V0" stroke="#aeb5c4" stroke-width=".3"/><path d="M2.5 -21 V0" stroke="#aeb5c4" stroke-width=".3"/><rect x="-2.07" y="-38" width="4.15" height="17" fill="#cfd5e2"/><rect x="-2.05" y="-45" width="4.1" height="7" fill="#aeb5c4"/><path d="M-2.2 -45 L2.2 -45 L2.2 -52 Q2.2 -56.5 0 -58.2 Q-2.2 -56.5 -2.2 -52 Z" fill="#e8ebf2"/><rect x="-3.4000000000000004" y="-1" width="6.800000000000001" height="1" fill="#3a4152"/></g><text x="58" y="4.6" text-anchor="middle" fill="#f2f4f8" font-size="2.7" font-weight="600">Протон-М</text><text x="58" y="8" text-anchor="middle" fill="#8c93a3" font-size="2.5">58 м</text><g transform="translate(78 0)" stroke="#3a4152" stroke-width=".2"><rect x="-1.85" y="-42" width="3.7" height="42" fill="#e8ebf2"/><rect x="-1.85" y="-44.5" width="3.7" height="2.5" fill="#3a4152"/><rect x="-1.85" y="-56" width="3.7" height="11.5" fill="#e8ebf2"/><path d="M-2.6 -56 L2.6 -56 L2.6 -61 Q2.6 -67 0 -70 Q-2.6 -67 -2.6 -61 Z" fill="#e8ebf2"/><path d="M-1.85 -3 L-4.6 0 M1.85 -3 L4.6 0" stroke="#cfd5e2" stroke-width=".5"/><rect x="-2.8" y="-47" width="1" height="2" fill="#aeb5c4"/><rect x="1.8" y="-47" width="1" height="2" fill="#aeb5c4"/><rect x="-1.55" y="-1" width="3.1" height="1" fill="#3a4152"/></g><text x="78" y="4.6" text-anchor="middle" fill="#f2f4f8" font-size="2.7" font-weight="600">Falcon 9</text><text x="78" y="8" text-anchor="middle" fill="#8c93a3" font-size="2.5">70 м</text><g transform="translate(100 0)" stroke="#3a4152" stroke-width=".2"><path d="M-5 0 L-8.6 0 L-5 -10 Z M5 0 L8.6 0 L5 -10 Z" fill="#aeb5c4"/><rect x="-5" y="-42" width="10" height="42" fill="#e8ebf2"/><rect x="-5" y="-42" width="10" height="6" fill="#3a4152"/><rect x="-5" y="-30" width="10" height="6" fill="#3a4152"/><rect x="-5" y="-66" width="10" height="24" fill="#e8ebf2"/><rect x="-5" y="-66" width="10" height="3" fill="#3a4152"/><path d="M-5 -66 L-3.3 -68 L3.3 -68 L5 -66 Z" fill="#aeb5c4"/><rect x="-3.3" y="-86" width="6.6" height="18" fill="#e8ebf2"/><rect x="-3.3" y="-87" width="6.6" height="1" fill="#3a4152"/><rect x="-1.95" y="-92.7" width="3.9" height="5.7" fill="#aeb5c4"/><path d="M-1.95 -92.7 L1.95 -92.7 L0 -96.2 Z" fill="#e8ebf2"/><path d="M0 -96.2 V-110.6" stroke="#cfd5e2" stroke-width=".4"/><rect x="-.5" y="-106" width="1" height="9" fill="#aeb5c4"/><rect x="-4.7" y="-1" width="9.4" height="1" fill="#3a4152"/></g><text x="100" y="4.6" text-anchor="middle" fill="#f2f4f8" font-size="2.7" font-weight="600">Saturn V</text><text x="100" y="8" text-anchor="middle" fill="#8c93a3" font-size="2.5">111 м</text></svg></div>
+<table style="margin-top:20px">
+<tr><th>Ракета</th><th>Высота</th><th>Известна</th></tr>
+<tr><td>Восток</td><td>~38 м</td><td>12.04.1961, первый человек в космосе</td></tr>
+<tr><td>Союз-2.1а</td><td>~46 м</td><td>первый пуск 2004</td></tr>
+<tr><td>Протон-М</td><td>~58 м</td><td>первый пуск 2001, стартует с Байконура</td></tr>
+<tr><td>Falcon 9</td><td>~70 м</td><td>первый пуск 2010, первая ступень возвращается</td></tr>
+<tr><td>Saturn V</td><td>~111 м</td><td>1967–1973, полёты на Луну</td></tr>
+</table>
+<p class="note" style="margin-top:12px">Силуэты упрощены, высоты округлены.</p></div></section>
+
 
 <section id="build"><h2>Конструкция</h2><div>
 <table>
@@ -144,7 +161,7 @@ nav{display:none}
 function r(){var d=Math.min(devicePixelRatio||1,2);c.width=c.offsetWidth*d;c.height=c.offsetHeight*d;x.setTransform(d,0,0,d,0,0);s=[];var n=c.offsetWidth<600?70:130;for(var i=0;i<n;i++)s.push([Math.random()*c.offsetWidth,Math.random()*c.offsetHeight,Math.random()*1.2+.3,Math.random()*6])}
 function d(){x.clearRect(0,0,c.width,c.height);t+=.02;x.fillStyle='#fff';s.forEach(function(p){x.globalAlpha=.35+.35*Math.sin(t+p[3]);x.fillRect(p[0],p[1],p[2],p[2])});if(!red&&!document.hidden)requestAnimationFrame(d)}
 r();d();addEventListener('resize',function(){r();d()});document.addEventListener('visibilitychange',function(){if(!document.hidden)d()});
-var m=document.getElementById('map');document.getElementById('again').addEventListener('click',function(){m.setCurrentTime(0)});
+var m=document.getElementById('map');
 if(red){m.pauseAnimations();m.setCurrentTime(10)}})();
 </script>
 </body>
