@@ -77,6 +77,25 @@ nav{display:none}
 .info b{display:block;font-weight:600;font-size:19px;margin-bottom:4px}
 .info span{display:block;color:var(--mute)}
 @media(prefers-reduced-motion:reduce){.ring{animation:none}}
+
+/* hero 3D */
+.hero,.hero .txt,.hero .bot{pointer-events:none}
+.hero .btn,.hero .chip{pointer-events:auto}
+.hero{display:flex;flex-direction:column;justify-content:space-between;min-height:100svh;padding:84px 20px 22px}
+#sky{z-index:0;pointer-events:auto;touch-action:pan-y;cursor:grab}
+#sky:active{cursor:grabbing}
+.hero .txt,.hero .bot{position:relative;z-index:1}
+.hero .bot{max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:36px;border:1px solid var(--line);background:rgba(0,0,0,.45);color:var(--ink);padding:0 12px;font:inherit;font-size:12px;letter-spacing:.1em;cursor:pointer}
+.chip:hover,.chip:focus-visible{border-color:var(--ink)}
+.chip.sel{border-color:var(--hot);color:var(--hot)}
+.hero .info{min-height:96px;margin:12px 0 0;max-width:none;text-shadow:0 0 8px #000,0 0 16px #000}
+.hint{margin-top:6px;font-size:12px}
+@media(min-width:800px){
+.hero{display:flex;grid-template-columns:none;gap:0;align-items:stretch;padding:100px 48px 28px}
+.hero .txt{align-self:flex-start;padding-bottom:0}
+}
 </style>
 </head>
 <body>
@@ -101,26 +120,20 @@ nav{display:none}
 </defs>
 </svg>
 
-<header><b>Ursa Minor</b><nav><a href="#mif">Миф</a><a href="#fizika">Физика</a><a href="#zvezdy">Звёзды</a><a href="#kosmos">Космос</a><a href="#sky-find">На небе</a><a href="#where">Когда и где</a></nav></header>
+<header><b>Ursa Minor</b><nav><a href="#mif">Миф</a><a href="#fizika">Физика</a><a href="#zvezdy">Звёзды</a><a href="#kosmos">Космос</a><a href="#sky-find">На небе</a></nav></header>
 
 <div class="hero">
-<canvas id="sky"></canvas>
+<canvas id="sky" aria-label="Малая Медведица в 3D: потяни, чтобы повернуть; выбери звезду, и ракета полетит к ней"></canvas>
 <div class="txt">
 <h1>Малая<br>Медведица</h1>
 <p class="pitch">Макет созвездия, который светится. Выбери звезду, и ракета полетит к ней.</p>
 <div class="when"></div>
 <div class="row"><a class="btn" href="#sky-find">Как найти</a></div>
 </div>
-<div class="mapwrap">
-<svg id="map" viewBox="0 0 360 320" role="group" aria-label="Малая Медведица: выбери звезду, и ракета полетит к ней">
-<path d="M0 306 H360" stroke="rgba(255,255,255,.25)"/>
-<text x="96" y="300" fill="#8c93a3" font-size="9" letter-spacing="2">ЗЕМЛЯ</text>
-<path id="lines" fill="none" stroke="rgba(255,255,255,.5)"/>
-<path id="trail" fill="none" stroke="#ff8a3d" stroke-width="1.6" stroke-linecap="round" opacity=".85"/>
-<g id="stars"></g>
-<g id="rk"><g id="fl" style="display:none"><use href="#flame" x="-58" y="-14" width="108" height="28"/></g><use href="#rocket" x="-58" y="-14" width="108" height="28"/></g>
-</svg>
+<div class="bot">
+<div id="chips" class="chips"></div>
 <div id="info" class="info" aria-live="polite"></div>
+<div class="note hint">Потяни, чтобы повернуть созвездие</div>
 </div>
 </div>
 
@@ -171,11 +184,7 @@ nav{display:none}
 <p><b>Как найти Полярную.</b> Найди ковш Большой Медведицы. Проведи линию через две крайние звезды его «чаши» и отложи пять таких расстояний. Упрёшься в Полярную. Ещё помогает Кассиопея, фигура в виде буквы W.</p>
 <p><b>Когда.</b> Лучше всего в безлунную ночь вдали от городских огней. Три звезды (Полярная, Кохаб и Феркад) видны легко, остальные четыре слабее и заметны только в тёмном небе.</p></div></section>
 
-<section class="d" id="where"><h2>Когда и где</h2><div>
-<p class="big">Выйди ночью и найди её сам.</p>
-<div class="when"></div></div></section>
-
-<footer>Физика. Творческая работа</footer>
+<footer>Made by Skis team</footer>
 
 <script>
 var EVENT={date:"Любая ясная ночь, лучше без Луны",time:"",place:"Север, высота над горизонтом равна широте места"};
@@ -186,51 +195,76 @@ function $(i){return document.getElementById(i)}
 document.querySelectorAll('.when').forEach(function(w){
 function item(l,v){var d=document.createElement('div'),s=document.createElement('span'),b=document.createElement('b');s.textContent=l;b.textContent=v;d.appendChild(s);d.appendChild(b);w.appendChild(d)}
 if(EVENT.date||EVENT.place){item('Когда',EVENT.date+(EVENT.time?', '+EVENT.time:''));item('Где',EVENT.place)}else item('Когда и где','Скоро здесь')});
-/* фон */
-var c=$('sky'),x=c.getContext('2d'),s=[],t=0;
-function r(){var d=Math.min(devicePixelRatio||1,2);c.width=c.offsetWidth*d;c.height=c.offsetHeight*d;x.setTransform(d,0,0,d,0,0);s=[];var n=c.offsetWidth<600?70:130;for(var i=0;i<n;i++)s.push([Math.random()*c.offsetWidth,Math.random()*c.offsetHeight,Math.random()*1.2+.3,Math.random()*6])}
-function d(){x.clearRect(0,0,c.width,c.height);t+=.02;x.fillStyle='#fff';s.forEach(function(p){x.globalAlpha=.35+.35*Math.sin(t+p[3]);x.fillRect(p[0],p[1],p[2],p[2])});if(!red&&!document.hidden)requestAnimationFrame(d)}
-r();d();addEventListener('resize',function(){r();d()});document.addEventListener('visibilitychange',function(){if(!document.hidden)d()});
-/* созвездие */
+/* 3D-сцена */
 var S=[
-{n:'Полярная',x:70,y:60,r:6.5,ly:430,c:'жёлто-белая',l:[10,-10,'start']},
-{n:'Йилдун',x:125,y:82,r:3.5,ly:170,c:'белая',l:[0,-12,'middle']},
-{n:'Эпсилон',x:175,y:92,r:3.5,ly:350,c:'жёлтая',l:[0,-12,'middle']},
-{n:'Дзета',x:218,y:106,r:3.5,ly:380,c:'белая',l:[0,-12,'middle']},
-{n:'Эта',x:214,y:150,r:3.5,ly:100,c:'жёлто-белая',l:[-11,4,'end']},
-{n:'Феркад',x:282,y:158,r:4.5,ly:490,c:'белая',l:[0,19,'middle']},
-{n:'Кохаб',x:298,y:112,r:5.5,ly:130,c:'оранжевая',l:[0,-13,'middle']}];
+{n:'Полярная',x:70,y:60,r:6.5,ly:430,c:'жёлто-белая',h:'#fff1c9',l:[10,-10,'start']},
+{n:'Йилдун',x:125,y:82,r:3.5,ly:170,c:'белая',h:'#ffffff',l:[0,-12,'middle']},
+{n:'Эпсилон',x:175,y:92,r:3.5,ly:350,c:'жёлтая',h:'#ffe69a',l:[0,-12,'middle']},
+{n:'Дзета',x:218,y:106,r:3.5,ly:380,c:'белая',h:'#ffffff',l:[0,-12,'middle']},
+{n:'Эта',x:214,y:150,r:3.5,ly:100,c:'жёлто-белая',h:'#fff1c9',l:[-11,4,'end']},
+{n:'Феркад',x:282,y:158,r:4.5,ly:490,c:'белая',h:'#ffffff',l:[0,19,'middle']},
+{n:'Кохаб',x:298,y:112,r:5.5,ly:130,c:'оранжевая',h:'#ffb070',l:[0,-13,'middle']}];
 var order=[0,1,2,3,4,5,6,3];
-$('lines').setAttribute('d','M'+order.map(function(i){return S[i].x+' '+S[i].y}).join(' L'));
-var G=$('stars'),rk=$('rk'),fl=$('fl'),trail=$('trail'),info=$('info'),P0={x:50,y:265},raf=0,timer=0,cur=-1;
-function mk(tag,a){var e=document.createElementNS(NS,tag);for(var k in a)e.setAttribute(k,a[k]);return e}
-S.forEach(function(st,i){
-var g=mk('g',{class:'star',tabindex:'0',role:'button','aria-label':st.n+', '+st.ly+' световых лет. Запустить ракету'});
-g.appendChild(mk('circle',{cx:st.x,cy:st.y,r:20,fill:'transparent'}));
-g.appendChild(mk('circle',{class:'core',cx:st.x,cy:st.y,r:st.r}));
-var tx=mk('text',{x:st.x+st.l[0],y:st.y+st.l[1],'text-anchor':st.l[2],'font-family':'Exo 2,sans-serif'});tx.textContent=st.n;g.appendChild(tx);
-g.addEventListener('click',function(){go(i)});
-g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go(i)}});
-G.appendChild(g);st.g=g});
-function pad(){rk.style.transition='none';fl.style.display='none';rk.setAttribute('transform','translate('+P0.x+' '+P0.y+') rotate(-90) scale(1.2)');rk.style.opacity=1}
+S.forEach(function(q){q.X=(q.x-185)*1.3;q.Y=(q.y-110)*1.3;q.Z=(q.ly-300)*.5});
+var P0=[-130,175,-100],info=$('info'),chips=$('chips');
+var c=$('sky'),x=c.getContext('2d'),W=0,H=0,t=0,yaw=0,pit=0,yT=0,pT=0,drag=null,moved=0,bg=[],sp=[],fly=null,cur=-1,F=520,CAM=520,SC=1,OX=0,OY=0;
+for(var n=0;n<(innerWidth<600?260:420);n++)bg.push([(Math.random()-.5)*2600,(Math.random()-.5)*1700,Math.random()*1500-300,Math.random()*6,Math.random()*1.3+.5]);
+function rs(){var d=Math.min(devicePixelRatio||1,2);W=c.offsetWidth;H=c.offsetHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);SC=Math.min(W*.95,H*1.1)/330;OX=W>=800?W*.17:0;OY=W>=800?0:H*.07}
+function pr(X,Y,Z){var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pit),sn=Math.sin(pit),a=X*cy+Z*sy,z1=-X*sy+Z*cy,b=Y*cp-z1*sn,z2=Y*sn+z1*cp,dp=z2+CAM;
+if(dp<60)return null;var k=F/dp*SC;return{x:W/2+OX+a*k,y:H/2+OY+b*k,k:k}}
+function pth(i,u){var a=S[i],C=[P0[0],P0[1]+(a.Y-P0[1])*.75,P0[2]],k=1-u;
+return[k*k*P0[0]+2*k*u*C[0]+u*u*a.X,k*k*P0[1]+2*k*u*C[1]+u*u*a.Y,k*k*P0[2]+2*k*u*C[2]+u*u*a.Z]}
+function pp(i,u){var q=pth(i,u);return pr(q[0],q[1],q[2])}
 function show(i){var st=S[i],y=new Date().getFullYear()-st.ly,v=st.ly*299792/17;
 var tt=v>=1e6?(v/1e6).toFixed(1).replace('.',',')+' млн лет':Math.round(v/1000)+' тыс. лет';
 info.innerHTML='';var b=document.createElement('b');b.textContent=st.n;info.appendChild(b);
-[ 'Расстояние: около '+st.ly+' световых лет, цвет '+st.c,
-  'Свет, который ты видишь, вышел из звезды в '+y+' году',
-  'На скорости Вояджера-1 (около 17 км/с) ракета летела бы '+tt].forEach(function(z){var p=document.createElement('span');p.textContent=z;info.appendChild(p)})}
-function ring(i){var e=mk('circle',{class:'ring',cx:S[i].x,cy:S[i].y,r:S[i].r+2});G.appendChild(e);setTimeout(function(){e.remove()},3000)}
-function path(i,u){var a=S[i],C={x:P0.x,y:P0.y+(a.y-P0.y)*.75},k=1-u;return{x:k*k*P0.x+2*k*u*C.x+u*u*a.x,y:k*k*P0.y+2*k*u*C.y+u*u*a.y,dx:2*k*(C.x-P0.x)+2*u*(a.x-C.x),dy:2*k*(C.y-P0.y)+2*u*(a.y-C.y)}}
-function go(i){cancelAnimationFrame(raf);clearTimeout(timer);cur=i;
-S.forEach(function(q,j){q.g.classList.toggle('sel',j===i)});show(i);pad();
-if(red){var pts=[];for(var j=0;j<=40;j++){var q=path(i,j/40);pts.push(q.x+' '+q.y)}trail.setAttribute('d','M'+pts.join(' L'));rk.style.opacity=1;return}
-fl.style.display='';trail.setAttribute('d','');var t0=performance.now(),D=3300;
-function f(now){var u=Math.min((now-t0)/D,1),e=u*u*(3-2*u),q=path(i,e),a=Math.atan2(q.dy,q.dx)*180/Math.PI,sc=1.2-.75*e;
-rk.setAttribute('transform','translate('+q.x+' '+q.y+') rotate('+a+') scale('+sc+')');
-var pts=[];for(var j=0;j<=36;j++){var w=path(i,e*j/36);pts.push(w.x+' '+w.y)}trail.setAttribute('d','M'+pts.join(' L'));
-if(u<1)raf=requestAnimationFrame(f);else{ring(i);rk.style.transition='opacity .45s';rk.style.opacity=0;timer=setTimeout(function(){fl.style.display='none';pad()},1100)}}
-raf=requestAnimationFrame(f)}
-pad();info.innerHTML='<b>Нажми на звезду</b><span>Ракета полетит к ней, а здесь появится, сколько до неё лететь.</span>';
+['Расстояние: около '+st.ly+' световых лет, цвет '+st.c,'Свет, который ты видишь, вышел из звезды в '+y+' году','На скорости Вояджера-1 (около 17 км/с) ракета летела бы '+tt].forEach(function(z){var p=document.createElement('span');p.textContent=z;info.appendChild(p)})}
+function go(i){cur=i;[].forEach.call(chips.children,function(b,j){b.classList.toggle('sel',j===i)});show(i);fly={i:i,t0:performance.now(),end:0};if(red)draw()}
+S.forEach(function(st,i){var b=document.createElement('button');b.className='chip';b.type='button';b.textContent=st.n;b.setAttribute('aria-label',st.n+', '+st.ly+' световых лет. Запустить ракету');b.onclick=function(){go(i)};chips.appendChild(b)});
+function rocket(p,a,s,al,fire){x.save();x.globalAlpha=al;x.translate(p.x,p.y);x.rotate(a);x.scale(s,s);
+if(fire){var L=16+Math.random()*10;x.fillStyle='#ff8a3d';x.beginPath();x.moveTo(-22,-3);x.lineTo(-22-L,0);x.lineTo(-22,3);x.fill();x.fillStyle='#ffe3b0';x.beginPath();x.moveTo(-22,-1.4);x.lineTo(-22-L*.55,0);x.lineTo(-22,1.4);x.fill()}
+x.fillStyle='#c9cfdb';x.beginPath();x.moveTo(-14,-4);x.lineTo(-24,-11);x.lineTo(-6,-4);x.moveTo(-14,4);x.lineTo(-24,11);x.lineTo(-6,4);x.fill();
+x.fillStyle='#f2f4f8';x.fillRect(-22,-4,40,8);x.beginPath();x.moveTo(18,-4);x.quadraticCurveTo(28,-3,32,0);x.quadraticCurveTo(28,3,18,4);x.fill();
+x.fillStyle='#ff8a3d';x.fillRect(-14,-4,3,8);x.fillStyle='#3a4152';x.fillRect(4,-4,5,8);x.restore()}
+function draw(now){now=now||performance.now();t+=.016;
+var tx=yT+(red?0:Math.sin(t*.4)*.16),ty=pT+(red?0:Math.cos(t*.3)*.05);yaw+=(tx-yaw)*(red?1:.07);pit+=(ty-pit)*(red?1:.07);
+x.clearRect(0,0,W,H);
+bg.forEach(function(b){var q=pr(b[0],b[1],b[2]);if(!q||q.x<-5||q.x>W+5||q.y<-5||q.y>H+5)return;x.globalAlpha=Math.min(1,.25+.3*Math.sin(t*2+b[3]))*Math.min(1,q.k/1.2);x.fillStyle='#fff';var z=b[4]*Math.min(q.k,1.8)*.8;x.fillRect(q.x,q.y,z,z)});
+x.globalAlpha=1;
+var pts=order.map(function(i){return pr(S[i].X,S[i].Y,S[i].Z)});
+if(pts.every(Boolean)){x.strokeStyle='rgba(255,255,255,.45)';x.lineWidth=1;x.beginPath();pts.forEach(function(p,j){j?x.lineTo(p.x,p.y):x.moveTo(p.x,p.y)});x.stroke()}
+/* Земля */
+var e0=pr(P0[0],P0[1]+30,P0[2]);if(e0){x.fillStyle='#8c93a3';x.font='10px "Exo 2",sans-serif';x.textAlign='center';x.fillText('ЗЕМЛЯ',e0.x,e0.y+14);x.strokeStyle='rgba(255,255,255,.3)';x.beginPath();x.moveTo(e0.x-50*e0.k,e0.y);x.lineTo(e0.x+50*e0.k,e0.y);x.stroke()}
+/* ракета */
+var u=0,al=1,fire=false,show_=true,ph=0;
+if(fly){var d=(now-fly.t0)/3300;if(red)d=1;u=Math.min(d,1);if(u>=1){if(!fly.end)fly.end=now;ph=red?0:now-fly.end;if(ph>1100){fly=null;u=0}else al=ph<450?1-ph/450:0}else fire=true}
+var eu=u*u*(3-2*u);
+if(fly){var tp=[];for(var j=0;j<=36;j++){var q=pp(fly.i,eu*j/36);if(q)tp.push(q)}
+x.globalAlpha=Math.max(al,.0)*.85;x.strokeStyle='#ff8a3d';x.lineWidth=1.8;x.lineCap='round';x.beginPath();tp.forEach(function(p,j){j?x.lineTo(p.x,p.y):x.moveTo(p.x,p.y)});x.stroke();x.globalAlpha=1}
+var rp=pp(fly?fly.i:0,fly?eu:0),r2=pp(fly?fly.i:0,fly?Math.min(eu+.02,1):.03);
+if(rp&&r2&&(!fly||al>0||red)){var ang=Math.atan2(r2.y-rp.y,r2.x-rp.x);if(fly&&u>=1)ang=Math.atan2(rp.y-(pp(fly.i,.97)||rp).y,rp.x-(pp(fly.i,.97)||rp).x);
+rocket(rp,fly?ang:-Math.PI/2,rp.k*.62*(1-.55*eu),fly?Math.max(al,0):1,fire)}
+/* звёзды */
+sp=[];S.forEach(function(st,i){var q=pr(st.X,st.Y,st.Z);sp[i]=q;if(!q)return;
+var rr=st.r*Math.min(q.k,2.2)*.42,sel=i===cur,col=sel?'#ff8a3d':st.h;
+x.shadowColor=col;x.shadowBlur=rr*4+6;x.fillStyle=col;x.beginPath();x.arc(q.x,q.y,rr*(sel?1.5:1),0,6.283);x.fill();x.shadowBlur=0;
+if(fly&&u>=1&&fly.i===i&&ph<1100){var rt=ph/1100;x.globalAlpha=1-rt;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(q.x,q.y,rr+rt*rr*7,0,6.283);x.stroke();x.globalAlpha=1}
+x.fillStyle=sel?'#fff':'#aab1c1';x.font=Math.max(11,Math.min(15,10+q.k*2.2))+'px "Exo 2",sans-serif';var A=st.l[2];x.textAlign=A;
+var dx=A==='start'?rr+9:A==='end'?-(rr+9):0,dy=A==='middle'?(st.l[1]<0?-(rr+9):rr+19):4;x.fillText(st.n,q.x+dx,q.y+dy)});
+if(!red&&!document.hidden)requestAnimationFrame(draw)}
+/* управление */
+function cl(v,m){return Math.max(-m,Math.min(m,v))}
+c.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY,y0:yT,p0:pT};moved=0;c.setPointerCapture(e.pointerId)});
+c.addEventListener('pointermove',function(e){if(drag){var dx=e.clientX-drag.x,dy=e.clientY-drag.y;moved=Math.max(moved,Math.abs(dx)+Math.abs(dy));yT=cl(drag.y0+dx*.006,1.3);if(e.pointerType!=='touch')pT=cl(drag.p0+dy*.006,.7)}
+else if(e.pointerType==='mouse'){yT=(e.clientX/W-.5)*.6;pT=(e.clientY/H-.5)*.4}
+if(red)draw()});
+c.addEventListener('pointerup',function(e){var r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+if(drag&&moved<6){var b=-1,bd=1e9;sp.forEach(function(q,i){if(!q)return;var d=Math.hypot(q.x-mx,q.y-my);if(d<bd){bd=d;b=i}});if(b>=0&&bd<34)go(b)}drag=null});
+c.addEventListener('pointercancel',function(){drag=null});
+addEventListener('resize',function(){rs();if(red)draw()});
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&!red)requestAnimationFrame(draw)});
+rs();draw();
+info.innerHTML='<b>Нажми на звезду</b><span>Ракета полетит к ней, а здесь появится, сколько до неё лететь.</span>';
 setTimeout(function(){if(cur<0)go(0)},900);
 })();
 </script>
