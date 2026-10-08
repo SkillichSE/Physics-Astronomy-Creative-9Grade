@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#000000">
+<title>Малая Медведица</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--ink:#f2f4f8;--mute:#8c93a3;--line:rgba(255,255,255,.22);--hot:#ff8a3d;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 "Exo 2",system-ui,sans-serif;overflow-x:hidden}
+header{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(14px + env(safe-area-inset-top,0px)) 20px 14px;background:linear-gradient(#000 40%,transparent)}
+header b{font-weight:600;letter-spacing:.3em;font-size:12px;text-transform:uppercase}
+nav a{display:inline-block;padding:8px 0;color:var(--ink);text-decoration:none;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-left:22px;opacity:.8}
+nav a:hover,nav a:focus-visible{opacity:1;text-decoration:underline}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:84px 20px 7vh;overflow:hidden}
+#sky{position:absolute;inset:0;width:100%;height:100%}
+#map{position:relative;width:100%;max-width:560px;height:auto;align-self:center;margin:0 0 3vh}
+.hero h1{position:relative;margin:0;font-weight:200;font-size:clamp(30px,9.4vw,112px);line-height:1.05;letter-spacing:.12em;text-transform:uppercase}
+.hero p{position:relative;max-width:460px;color:var(--mute);margin:14px 0 22px}
+.row{position:relative;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;justify-content:center;align-items:center;min-height:48px;border:1px solid var(--ink);background:none;color:var(--ink);padding:0 26px;font:inherit;font-size:12px;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.btn:hover,.btn:focus-visible{background:var(--ink);color:#000}
+section{border-top:1px solid var(--line);padding:56px 20px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+h2{margin:0;font-weight:300;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
+.big{font-size:clamp(22px,3.4vw,38px);font-weight:200;line-height:1.35;margin:0 0 18px}
+p{margin:0 0 14px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border-top:1px solid var(--line)}
+.cols div{padding:18px 16px 18px 0;border-bottom:1px solid var(--line)}
+.cols b{display:block;font-weight:600;margin-bottom:4px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:13px 8px 13px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:300;color:var(--mute);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+td:first-child{font-weight:400}
+.rocket{display:flex;flex-direction:column;align-items:center;gap:10px}
+.rocket svg{width:min(110px,30vw);height:auto;flex:none}
+.note{color:var(--mute);font-size:14px}
+footer{border-top:1px solid var(--line);padding:28px 20px;color:var(--mute);font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-align:center}
+@media(min-width:800px){
+header{padding-left:32px;padding-right:32px}
+.hero{padding:100px 40px 10vh}
+#map{align-self:flex-end;margin-bottom:-4vh}
+section{padding:96px 32px;grid-template-columns:240px minmax(0,1fr);gap:48px}
+.rocket{flex-direction:row;justify-content:flex-start;gap:48px}
+}
+@media(max-width:600px){
+nav{display:none}
+.row .btn{flex:1 1 100%}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="rocket" viewBox="-58 -14 108 28" overflow="visible">
+<polygon points="-34,0 -42,-3 -42,3" fill="#ff8a3d"><animate attributeName="points" values="-34,0 -44,-3 -44,3;-34,0 -58,-3 -58,3;-34,0 -48,-3 -48,3" dur=".16s" repeatCount="indefinite"/></polygon>
+<polygon points="-34,0 -40,-1.4 -40,1.4" fill="#ffe3b0"/>
+<polygon points="-33,-2.2 -38,-3.8 -38,3.8 -33,2.2" fill="#8d95a6"/>
+<path d="M-27 -4 L-39 -11 M-27 4 L-39 11" stroke="#d8dce6" stroke-width="1.5" stroke-linecap="round"/>
+<rect x="-33" y="-4" width="44" height="8" fill="#f2f4f8"/>
+<rect x="-23" y="-4" width="3" height="8" fill="#ff8a3d"/>
+<path d="M-8 -4 V4 M2 -4 V4" stroke="#cfd5e2" stroke-width=".6"/>
+<rect x="11" y="-4" width="6" height="8" fill="#3a4152"/>
+<rect x="12" y="-7.4" width="3.4" height="3.4" fill="#aeb5c4"/><rect x="12" y="4" width="3.4" height="3.4" fill="#aeb5c4"/>
+<rect x="17" y="-4" width="12" height="8" fill="#f2f4f8"/>
+<path d="M29 -4 L31 -5 L37 -5 Q45 -3.6 48 0 Q45 3.6 37 5 L31 5 L29 4 Z" fill="#f2f4f8"/>
+<path d="M31 -5 L37 -5 Q45 -3.6 48 0" fill="none" stroke="#cfd5e2" stroke-width=".6"/>
+</symbol>
+</defs>
+</svg>
+
+<header><b>Ursa Minor</b><nav><a href="#mif">Миф</a><a href="#fizika">Физика</a><a href="#zvezdy">Звёзды</a><a href="#kosmos">Космос</a></nav></header>
+
+<div class="hero">
+<canvas id="sky"></canvas>
+<svg id="map" viewBox="0 0 320 250" role="img" aria-label="Малая Медведица и полёт ракеты к Полярной звезде">
+<path d="M60 50 L105 66 L145 74 L180 86 L178 122 L232 130 L244 92 L180 86" stroke="rgba(255,255,255,.55)" fill="none"/>
+<path d="M0 244 H320" stroke="rgba(255,255,255,.25)"/>
+<text x="6" y="238" fill="#8c93a3" font-size="8" font-family="Exo 2,sans-serif" letter-spacing="2">ЗЕМЛЯ</text>
+<path id="trail" d="M50 242 C 28 170 34 105 56 62" pathLength="1" stroke="#ff8a3d" stroke-width="1.5" stroke-dasharray="1" stroke-dashoffset="1" fill="none"><animate attributeName="stroke-dashoffset" from="1" to="0" dur="4.5s" begin="0.5s" fill="freeze"/></path>
+<g fill="#fff"><circle cx="105" cy="66" r="3"/><circle cx="145" cy="74" r="3"/><circle cx="180" cy="86" r="3.5"/><circle cx="178" cy="122" r="3.5"/><circle cx="232" cy="130" r="4"/><circle cx="244" cy="92" r="5"/><circle cx="60" cy="50" r="6"/></g>
+<circle cx="60" cy="50" r="6" fill="none" stroke="#fff"><animate attributeName="r" values="6;24" dur="1.6s" begin="5s" repeatCount="2"/><animate attributeName="opacity" values="1;0" dur="1.6s" begin="5s" repeatCount="2"/></circle>
+<g fill="#8c93a3" font-size="9" font-family="Exo 2,sans-serif"><text x="74" y="42">ПОЛЯРНАЯ</text><text x="250" y="88">КОХАБ</text><text x="206" y="148">ФЕРКАД</text></g>
+<g>
+<animate attributeName="opacity" from="1" to="0" dur=".4s" begin="4.7s" fill="freeze"/>
+<animateMotion dur="4.5s" begin="0.5s" fill="freeze" rotate="auto"><mpath href="#trail"/></animateMotion>
+<use href="#rocket" x="-58" y="-14" width="108" height="28" transform="scale(.6)"/>
+</g>
+</svg>
+<h1>Малая<br>Медведица</h1>
+<p>Макет созвездия. Семь звёзд, одна из них показывает на север.</p>
+<div class="row"><a class="btn" href="#mif">Смотреть</a><button class="btn" id="again" type="button">Повторить запуск</button></div>
+</div>
+
+<section id="mif"><h2>Миф</h2><div>
+<p class="big">Нимфу Каллисто превратили в медведицу. Зевс поднял её и сына Аркаса на небо.</p>
+<p>По другой версии, нимфа Киносура вырастила младенца Зевса и в благодарность оказалась среди звёзд. Моряки веками шли по этому созвездию.</p></div></section>
+
+<section id="fizika"><h2>Физика</h2><div>
+<p class="big">Полярная звезда почти не движется по небу. Поэтому она показывает на север.</p>
+<div class="cols">
+<div><b>Север</b>Звезда стоит почти над северным полюсом мира.</div>
+<div><b>Широта</b>Высота Полярной над горизонтом равна широте места.</div>
+<div><b>Цвет</b>Горячие звёзды белые, холодные оранжевые.</div>
+<div><b>Перспектива</b>Звёзды ковша лежат на разных расстояниях. С другой стороны фигура выглядела бы иначе.</div>
+<div><b>Смена полюса</b>Через ~12 000 лет роль Полярной перейдёт к Веге.</div>
+</div></div></section>
+
+<section id="zvezdy"><h2>Звёзды</h2><div>
+<table>
+<tr><th>Звезда</th><th>Св. лет</th><th>Цвет</th></tr>
+<tr><td>Полярная</td><td>~430</td><td>жёлто-белая</td></tr>
+<tr><td>Кохаб</td><td>~130</td><td>оранжевая</td></tr>
+<tr><td>Феркад</td><td>~490</td><td>белая</td></tr>
+<tr><td>Йилдун</td><td>~170</td><td>белая</td></tr>
+<tr><td>Эпсилон</td><td>~350</td><td>жёлтая</td></tr>
+<tr><td>Дзета</td><td>~380</td><td>белая</td></tr>
+<tr><td>Эта</td><td>~100</td><td>жёлто-белая</td></tr>
+</table>
+<p class="note" style="margin-top:12px">Расстояния приблизительные.</p></div></section>
+
+<section id="kosmos"><h2>Космос</h2><div class="rocket">
+<svg viewBox="-20 -80 40 160" role="img" aria-label="Ракета"><use href="#rocket" x="-58" y="-14" width="108" height="28" transform="translate(0 10) rotate(-90) scale(1.5)"/></svg>
+<div>
+<p class="big">Космические аппараты тоже ориентируются по звёздам.</p>
+<p>Звёздный датчик снимает участок неба и сравнивает его с каталогом. Так аппарат узнаёт, как он повёрнут. Звёзды очень далеки, поэтому для навигации они неподвижны, как маяки. Идея та же, что у моряков с Полярной.</p></div></div></section>
+
+<section id="build"><h2>Конструкция</h2><div>
+<table>
+<tr><td>Основа</td><td>пенокартон 30×45 см, 5 мм</td></tr>
+<tr><td>Свет</td><td>гирлянда «Роса», 7 светодиодов выведены вперёд</td></tr>
+<tr><td>Питание</td><td>3 батарейки LR44</td></tr>
+<tr><td>Описание</td><td>откидное крыло из чёрного картона</td></tr>
+<tr><td>Надписи</td><td>белая гелевая ручка</td></tr>
+</table></div></section>
+
+<footer>Физика. Творческая работа</footer>
+
+<script>
+(function(){var c=document.getElementById('sky'),x=c.getContext('2d'),s=[],t=0,red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function r(){var d=Math.min(devicePixelRatio||1,2);c.width=c.offsetWidth*d;c.height=c.offsetHeight*d;x.setTransform(d,0,0,d,0,0);s=[];var n=c.offsetWidth<600?70:130;for(var i=0;i<n;i++)s.push([Math.random()*c.offsetWidth,Math.random()*c.offsetHeight,Math.random()*1.2+.3,Math.random()*6])}
+function d(){x.clearRect(0,0,c.width,c.height);t+=.02;x.fillStyle='#fff';s.forEach(function(p){x.globalAlpha=.35+.35*Math.sin(t+p[3]);x.fillRect(p[0],p[1],p[2],p[2])});if(!red&&!document.hidden)requestAnimationFrame(d)}
+r();d();addEventListener('resize',function(){r();d()});document.addEventListener('visibilitychange',function(){if(!document.hidden)d()});
+var m=document.getElementById('map');document.getElementById('again').addEventListener('click',function(){m.setCurrentTime(0)});
+if(red){m.pauseAnimations();m.setCurrentTime(10)}})();
+</script>
+</body>
+</html>
