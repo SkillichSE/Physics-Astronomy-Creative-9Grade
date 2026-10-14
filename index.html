@@ -40,8 +40,8 @@ td:first-child{font-weight:400}
 .txt{position:relative}
 section{position:relative;overflow:hidden}
 section.d>div{position:relative;z-index:1}
-.decor{position:absolute;right:28px;bottom:40px;width:300px;height:calc(100% - 80px);max-height:440px;object-fit:cover;pointer-events:none;opacity:.7;-webkit-mask-image:linear-gradient(to right,transparent,#000 35%);mask-image:linear-gradient(to right,transparent,#000 35%)}
-@media(max-width:799px){.decor{right:0;width:62%;opacity:.28}}
+.decor{position:absolute;right:0;bottom:0;width:440px;height:100%;max-height:560px;object-fit:cover;pointer-events:none;opacity:1;filter:contrast(1.22) saturate(1.45) brightness(1.08);-webkit-mask-image:linear-gradient(to right,transparent,#000 40%),linear-gradient(to bottom,transparent,#000 18%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 40%),linear-gradient(to bottom,transparent,#000 18%);mask-composite:intersect}
+@media(max-width:799px){.decor{right:0;width:72%;opacity:.5}}
 .note{color:var(--mute);font-size:14px}
 footer{border-top:1px solid var(--line);padding:28px 20px;color:var(--mute);font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-align:center}
 @media(min-width:800px){
@@ -49,7 +49,7 @@ header{padding-left:32px;padding-right:32px}
 .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:40px;padding:100px 48px 6vh}
 .hero .txt{align-self:end;padding-bottom:4vh}
 #map{max-width:none;margin:0;align-self:center}
-section.d>div{padding-right:320px}
+section.d>div{padding-right:400px}
 section{padding:96px 32px;grid-template-columns:240px minmax(0,1fr);gap:48px}
 .rocket{flex-direction:row;justify-content:flex-start;gap:48px}
 }
