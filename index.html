@@ -229,7 +229,7 @@ info.innerHTML='';var b=document.createElement('b');b.textContent=st.n;info.appe
 function go(i){cur=i;[].forEach.call(chips.children,function(b,j){b.classList.toggle('sel',j===i)});show(i);selT=performance.now();if(red)draw()}
 S.forEach(function(st,i){var b=document.createElement('button');b.className='chip';b.type='button';b.textContent=st.n;b.setAttribute('aria-label',st.n+', '+st.ly+' световых лет. Показать данные');b.onclick=function(){go(i)};chips.appendChild(b)});
 function draw(now){now=now||performance.now();t+=.016;
-var tx=yT+(red?0:Math.sin(t*.4)*.16),ty=pT+(red?0:Math.cos(t*.3)*.05);yaw+=(tx-yaw)*(red?1:.07);pit+=(ty-pit)*(red?1:.07);
+var tx=yT+(red?0:Math.sin(t*.25)*.04),ty=pT+(red?0:Math.cos(t*.2)*.015);yaw+=(tx-yaw)*(red?1:.035);pit+=(ty-pit)*(red?1:.035);
 x.clearRect(0,0,W,H);
 bg.forEach(function(b){var q=pr(b[0],b[1],b[2]);if(!q||q.x<-5||q.x>W+5||q.y<-5||q.y>H+5)return;x.globalAlpha=Math.min(1,.25+.3*Math.sin(t*2+b[3]))*Math.min(1,q.k/1.2);x.fillStyle='#fff';var z=b[4]*Math.min(q.k,1.8)*.8;x.fillRect(q.x,q.y,z,z)});
 x.globalAlpha=1;
@@ -247,7 +247,7 @@ if(!red&&!document.hidden)requestAnimationFrame(draw)}
 function cl(v,m){return Math.max(-m,Math.min(m,v))}
 c.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY,y0:yT,p0:pT};moved=0;c.setPointerCapture(e.pointerId)});
 c.addEventListener('pointermove',function(e){if(drag){var dx=e.clientX-drag.x,dy=e.clientY-drag.y;moved=Math.max(moved,Math.abs(dx)+Math.abs(dy));yT=cl(drag.y0+dx*.006,1.3);if(e.pointerType!=='touch')pT=cl(drag.p0+dy*.006,.7)}
-else if(e.pointerType==='mouse'){yT=(e.clientX/W-.5)*.6;pT=(e.clientY/H-.5)*.4}
+else if(e.pointerType==='mouse'){yT=(e.clientX/W-.5)*.12;pT=(e.clientY/H-.5)*.08}
 if(red)draw()});
 c.addEventListener('pointerup',function(e){var r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
 if(drag&&moved<6){var b=-1,bd=1e9;sp.forEach(function(q,i){if(!q)return;var d=Math.hypot(q.x-mx,q.y-my);if(d<bd){bd=d;b=i}});if(b>=0&&bd<34)go(b)}drag=null});
