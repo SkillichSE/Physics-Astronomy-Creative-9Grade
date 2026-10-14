@@ -102,6 +102,13 @@ nav{display:none}
 .facts{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .facts div{padding:22px 20px 22px 0}
 .facts .num{display:block;color:var(--hot);font-size:12px;letter-spacing:.2em;margin-bottom:6px}
+
+/* зазор между кнопкой и чипами на любых экранах */
+.hero{gap:32px}
+.hero .txt{padding-bottom:8px}
+.hero .row{margin-bottom:0}
+@media(max-width:799px){.hero{gap:24px}}
+@media(max-height:760px) and (min-width:800px){.hero{min-height:760px}}
 </style>
 </head>
 <body>
