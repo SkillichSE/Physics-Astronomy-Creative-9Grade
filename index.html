@@ -16,6 +16,13 @@ header{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-conten
 header b{font-weight:600;letter-spacing:.3em;font-size:12px;text-transform:uppercase}
 nav a{display:inline-block;padding:8px 0;color:var(--ink);text-decoration:none;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-left:22px;opacity:.8}
 nav a:hover,nav a:focus-visible{opacity:1;text-decoration:underline}
+.lang{position:relative;display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:2px;background:rgba(0,0,0,.55)}
+.lang i{position:absolute;top:2px;bottom:2px;left:2px;width:calc(50% - 2px);border-radius:999px;background:var(--hot);transition:transform .25s ease}
+.lang[data-lang="en"] i{transform:translateX(100%)}
+.lang button{position:relative;z-index:1;min-width:46px;min-height:34px;border:0;background:none;color:var(--ink);font:inherit;font-size:11px;font-weight:600;letter-spacing:.15em;cursor:pointer;transition:color .25s}
+.lang button[aria-pressed="true"]{color:#000}
+.lang button:focus-visible{outline:2px solid #fff;outline-offset:2px;border-radius:999px}
+@media(prefers-reduced-motion:reduce){.lang i{transition:none}}
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:84px 20px 7vh;overflow:hidden}
 #sky{position:absolute;inset:0;width:100%;height:100%}
 #map{position:relative;width:100%;max-width:560px;height:auto;align-self:center;margin:0 0 3vh}
@@ -134,83 +141,145 @@ nav{display:none}
 </defs>
 </svg>
 
-<header><b>Ursa Minor</b></header>
+<header><b>Ursa Minor</b>
+<div class="lang" id="lang" data-lang="ru" role="group" aria-label="Language / Язык"><i aria-hidden="true"></i><button type="button" data-l="ru" aria-pressed="true">RU</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
+</header>
 
 <div class="hero">
 <canvas id="sky" aria-label="Малая Медведица в 3D: потяни, чтобы повернуть; выбери звезду"></canvas>
 <div id="pop" class="pop" aria-live="polite"></div>
 <div class="txt">
-<h1>Малая<br>Медведица</h1>
-<p class="pitch">Макет созвездия, который светится. Выбери звезду и узнай, как далеко она.</p>
+<h1 data-i="h1">Малая<br>Медведица</h1>
+<p class="pitch" data-i="pitch">Макет созвездия, который светится. Выбери звезду и узнай, как далеко она.</p>
 <div class="when"></div>
-<div class="row"><a class="btn" href="#observe">Как найти</a></div>
+<div class="row"><a class="btn" href="#observe" data-i="btn">Как найти</a></div>
 </div>
 <div class="bot">
-<div class="note hint">Потяни, чтобы повернуть созвездие</div>
+<div class="note hint" data-i="hint">Потяни, чтобы повернуть созвездие</div>
 </div>
 </div>
 
-<section class="d" id="mif"><h2>Миф</h2><div>
-<p class="big">Нимфу Каллисто превратили в медведицу. Зевс поднял её и сына Аркаса на небо.</p>
-<p>По другой версии, нимфа Киносура вырастила младенца Зевса и в благодарность оказалась среди звёзд. Моряки веками шли по этому созвездию.</p></div><img class="decor" src="https://images-assets.nasa.gov/image/KSC-20190302-PH_AWG06_0008/KSC-20190302-PH_AWG06_0008~large.jpg" alt="Старт Crew Dragon на ракете Falcon 9, фото NASA" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
+<section class="d" id="mif"><h2 data-i="h_myth">Миф</h2><div>
+<p class="big" data-i="myth1">Нимфу Каллисто превратили в медведицу. Зевс поднял её и сына Аркаса на небо.</p>
+<p data-i="myth2">По другой версии, нимфа Киносура вырастила младенца Зевса и в благодарность оказалась среди звёзд. Моряки веками шли по этому созвездию.</p></div><img class="decor" src="https://images-assets.nasa.gov/image/KSC-20190302-PH_AWG06_0008/KSC-20190302-PH_AWG06_0008~large.jpg" alt="Старт Crew Dragon на ракете Falcon 9, фото NASA" data-ia="a1" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
 
-<section id="facts"><h2>Интересные факты</h2><div>
-<p class="big">Скромное созвездие, за которым много любопытного.</p>
+<section id="facts"><h2 data-i="h_facts">Интересные факты</h2><div>
+<p class="big" data-i="facts_big">Скромное созвездие, за которым много любопытного.</p>
 <div class="cols facts">
-<div><span class="num">01</span><b>Звезда с пульсом</b>Полярная — пульсирующая переменная звезда, цефеида. Её блеск слегка меняется с периодом около четырёх суток. Это ближайшая к нам цефеида.</div>
-<div><span class="num">02</span><b>Тройная система</b>Полярная — не одна звезда, а три. Яркий сверхгигант и два спутника. Она примерно в 2000 раз ярче Солнца.</div>
-<div><span class="num">03</span><b>Стражи полюса</b>Кохаб и Феркад кружат вокруг полюса мира, и их издавна называли «стражами полюса». Около 3000 лет назад именно Кохаб был ближе всех ярких звёзд к полюсу.</div>
-<div><span class="num">04</span><b>Полюс уйдёт</b>Полярная подойдёт к полюсу мира ближе всего примерно в 2100 году. Потом она начнёт удаляться, а через ~12 000 лет её сменит Вега.</div>
-<div><span class="num">05</span><b>Арабские имена</b>Название Кохаб восходит к арабскому слову «звезда», а Феркад означает «телёнок». Большинство имён звёзд пришли к нам из арабской астрономии.</div>
-<div><span class="num">06</span><b>Звёздный дождь</b>Каждый декабрь, около 22-го числа, из этого созвездия вылетают метеоры потока Урсиды. Их породила комета Туттла.</div>
-<div><span class="num">07</span><b>Карликовая соседка</b>В Малой Медведице есть карликовая галактика, спутник Млечного Пути. До неё около 200 000 световых лет, и увидеть её можно только в большой телескоп.</div>
+<div><span class="num">01</span><b data-i="f1t">Звезда с пульсом</b><span data-i="f1d">Полярная — пульсирующая переменная звезда, цефеида. Её блеск слегка меняется с периодом около четырёх суток. Это ближайшая к нам цефеида.</span></div>
+<div><span class="num">02</span><b data-i="f2t">Тройная система</b><span data-i="f2d">Полярная — не одна звезда, а три. Яркий сверхгигант и два спутника. Она примерно в 2000 раз ярче Солнца.</span></div>
+<div><span class="num">03</span><b data-i="f3t">Стражи полюса</b><span data-i="f3d">Кохаб и Феркад кружат вокруг полюса мира, и их издавна называли «стражами полюса». Около 3000 лет назад именно Кохаб был ближе всех ярких звёзд к полюсу.</span></div>
+<div><span class="num">04</span><b data-i="f4t">Полюс уйдёт</b><span data-i="f4d">Полярная подойдёт к полюсу мира ближе всего примерно в 2100 году. Потом она начнёт удаляться, а через ~12 000 лет её сменит Вега.</span></div>
+<div><span class="num">05</span><b data-i="f5t">Арабские имена</b><span data-i="f5d">Название Кохаб восходит к арабскому слову «звезда», а Феркад означает «телёнок». Большинство имён звёзд пришли к нам из арабской астрономии.</span></div>
+<div><span class="num">06</span><b data-i="f6t">Звёздный дождь</b><span data-i="f6d">Каждый декабрь, около 22-го числа, из этого созвездия вылетают метеоры потока Урсиды. Их породила комета Туттла.</span></div>
+<div><span class="num">07</span><b data-i="f7t">Карликовая соседка</b><span data-i="f7d">В Малой Медведице есть карликовая галактика, спутник Млечного Пути. До неё около 200 000 световых лет, и увидеть её можно только в большой телескоп.</span></div>
 </div></div></section>
 
-<section id="observe"><h2>Наблюдение</h2><div>
-<p class="big">Малая Медведица видна в любое время года. Нужна только ясная ночь.</p>
-<p><b>Место.</b> Смотри на север. Высота Полярной звезды над горизонтом равна широте места, где ты стоишь. Чем севернее, тем выше она над головой. Полярная стоит на конце «ручки» ковша, почти над северным полюсом мира.</p>
-<p><b>Как найти.</b> Найди ковш Большой Медведицы. Проведи линию через две крайние звезды его «чаши» и отложи пять таких расстояний. Упрёшься в Полярную. Ещё помогает Кассиопея, фигура в виде буквы W. Легко видны Полярная, Кохаб и Феркад, остальные четыре звезды слабее.</p>
-<p><b>Время.</b> Лучше всего в безлунную ночь вдали от городских огней: Луна и засветка прячут слабые звёзды. Созвездие вращается вокруг Полярной, поэтому за ночь и за год ковш меняет положение, но не исчезает.</p></div></section>
+<section id="observe"><h2 data-i="h_obs">Наблюдение</h2><div>
+<p class="big" data-i="obs_big">Малая Медведица видна в любое время года. Нужна только ясная ночь.</p>
+<p data-i="obs1"><b>Место.</b> Смотри на север. Высота Полярной звезды над горизонтом равна широте места, где ты стоишь. Чем севернее, тем выше она над головой. Полярная стоит на конце «ручки» ковша, почти над северным полюсом мира.</p>
+<p data-i="obs2"><b>Как найти.</b> Найди ковш Большой Медведицы. Проведи линию через две крайние звезды его «чаши» и отложи пять таких расстояний. Упрёшься в Полярную. Ещё помогает Кассиопея, фигура в виде буквы W. Легко видны Полярная, Кохаб и Феркад, остальные четыре звезды слабее.</p>
+<p data-i="obs3"><b>Время.</b> Лучше всего в безлунную ночь вдали от городских огней: Луна и засветка прячут слабые звёзды. Созвездие вращается вокруг Полярной, поэтому за ночь и за год ковш меняет положение, но не исчезает.</p></div></section>
 
-<section class="d" id="fizika"><h2>Физика</h2><div>
-<p class="big">Полярная звезда почти не движется по небу. Поэтому она показывает на север.</p>
+<section class="d" id="fizika"><h2 data-i="h_phys">Физика</h2><div>
+<p class="big" data-i="phys_big">Полярная звезда почти не движется по небу. Поэтому она показывает на север.</p>
 <div class="cols">
-<div><b>Север</b>Звезда стоит почти над северным полюсом мира.</div>
-<div><b>Широта</b>Высота Полярной над горизонтом равна широте места.</div>
-<div><b>Цвет</b>Горячие звёзды белые, холодные оранжевые.</div>
-<div><b>Перспектива</b>Звёзды ковша лежат на разных расстояниях. С другой стороны фигура выглядела бы иначе.</div>
-<div><b>Смена полюса</b>Через ~12 000 лет роль Полярной перейдёт к Веге.</div>
-</div></div><img class="decor" src="https://images-assets.nasa.gov/image/201503280009HQ/201503280009HQ~large.jpg" alt="Старт ракеты «Союз» с Байконура, фото NASA" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
+<div><b data-i="p1t">Север</b><span data-i="p1d">Звезда стоит почти над северным полюсом мира.</span></div>
+<div><b data-i="p2t">Широта</b><span data-i="p2d">Высота Полярной над горизонтом равна широте места.</span></div>
+<div><b data-i="p3t">Цвет</b><span data-i="p3d">Горячие звёзды белые, холодные оранжевые.</span></div>
+<div><b data-i="p4t">Перспектива</b><span data-i="p4d">Звёзды ковша лежат на разных расстояниях. С другой стороны фигура выглядела бы иначе.</span></div>
+<div><b data-i="p5t">Смена полюса</b><span data-i="p5d">Через ~12 000 лет роль Полярной перейдёт к Веге.</span></div>
+</div></div><img class="decor" src="https://images-assets.nasa.gov/image/201503280009HQ/201503280009HQ~large.jpg" alt="Старт ракеты «Союз» с Байконура, фото NASA" data-ia="a2" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
 
-<section class="d" id="zvezdy"><h2>Звёзды</h2><div>
+<section class="d" id="zvezdy"><h2 data-i="h_stars">Звёзды</h2><div>
 <table>
-<tr><th>Звезда</th><th>Св. лет</th><th>Цвет</th></tr>
-<tr><td>Полярная</td><td>~430</td><td>жёлто-белая</td></tr>
-<tr><td>Кохаб</td><td>~130</td><td>оранжевая</td></tr>
-<tr><td>Феркад</td><td>~490</td><td>белая</td></tr>
-<tr><td>Иилдун</td><td>~170</td><td>белая</td></tr>
-<tr><td>Уроделус</td><td>~350</td><td>жёлтая</td></tr>
-<tr><td>Алифа</td><td>~380</td><td>белая</td></tr>
-<tr><td>Анвар</td><td>~100</td><td>жёлто-белая</td></tr>
+<tr><th data-i="th1">Звезда</th><th data-i="th2">Св. лет</th><th data-i="th3">Цвет</th></tr>
+<tr><td data-i="tn0">Полярная</td><td>~430</td><td data-i="tc0">жёлто-белая</td></tr>
+<tr><td data-i="tn1">Кохаб</td><td>~130</td><td data-i="tc1">оранжевая</td></tr>
+<tr><td data-i="tn2">Феркад</td><td>~490</td><td data-i="tc2">белая</td></tr>
+<tr><td data-i="tn3">Иилдун</td><td>~170</td><td data-i="tc3">белая</td></tr>
+<tr><td data-i="tn4">Уроделус</td><td>~350</td><td data-i="tc4">жёлтая</td></tr>
+<tr><td data-i="tn5">Алифа</td><td>~380</td><td data-i="tc5">белая</td></tr>
+<tr><td data-i="tn6">Анвар</td><td>~100</td><td data-i="tc6">жёлто-белая</td></tr>
 </table>
-<p class="note" style="margin-top:12px">Расстояния приблизительные.</p></div><img class="decor" src="https://images-assets.nasa.gov/image/KSC-20190302-PH_AWG02_0002/KSC-20190302-PH_AWG02_0002~large.jpg" alt="Старт Falcon 9, фото NASA" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
+<p class="note" style="margin-top:12px" data-i="approx">Расстояния приблизительные.</p></div><img class="decor" src="https://images-assets.nasa.gov/image/KSC-20190302-PH_AWG02_0002/KSC-20190302-PH_AWG02_0002~large.jpg" alt="Старт Falcon 9, фото NASA" data-ia="a3" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
 
-<section class="d" id="kosmos"><h2>Космос</h2><div>
-<p class="big">Космические аппараты тоже ориентируются по звёздам.</p>
-<p>Звёздный датчик снимает участок неба и сравнивает его с каталогом. Так аппарат узнаёт, как он повёрнут. Звёзды очень далеки, поэтому для навигации они неподвижны, как маяки. Идея та же, что у моряков с Полярной.</p></div><img class="decor" src="https://images-assets.nasa.gov/image/nhq201603190003/nhq201603190003~large.jpg" alt="Старт ракеты «Союз», фото NASA" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
+<section class="d" id="kosmos"><h2 data-i="h_space">Космос</h2><div>
+<p class="big" data-i="space_big">Космические аппараты тоже ориентируются по звёздам.</p>
+<p data-i="space_p">Звёздный датчик снимает участок неба и сравнивает его с каталогом. Так аппарат узнаёт, как он повёрнут. Звёзды очень далеки, поэтому для навигации они неподвижны, как маяки. Идея та же, что у моряков с Полярной.</p></div><img class="decor" src="https://images-assets.nasa.gov/image/nhq201603190003/nhq201603190003~large.jpg" alt="Старт ракеты «Союз», фото NASA" data-ia="a4" loading="lazy" decoding="async" referrerpolicy="no-referrer"></section>
 
 <footer>Made by Skis team</footer>
 
 <script>
-var EVENT={date:"Любая ясная ночь, лучше без Луны",time:"",place:"Север, высота над горизонтом равна широте места"};
 (function(){
 var NS='http://www.w3.org/2000/svg',red=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function $(i){return document.getElementById(i)}
 
-document.querySelectorAll('.when').forEach(function(w){
-function item(l,v){var d=document.createElement('div'),s=document.createElement('span'),b=document.createElement('b');s.textContent=l;b.textContent=v;d.appendChild(s);d.appendChild(b);w.appendChild(d)}
-if(EVENT.date||EVENT.place){item('Когда',EVENT.date+(EVENT.time?', '+EVENT.time:''));item('Где',EVENT.place)}else item('Когда и где','Скоро здесь')});
+/* ---------- i18n ---------- */
+var LANGS=['ru','en'],L='ru';
+var RU_LIKE=['ru','kk','be','uk'];
+var EVENTS={
+ru:{date:'Любая ясная ночь, лучше без Луны',time:'',place:'Север, высота над горизонтом равна широте места',lw:'Когда',lp:'Где',title:'Малая Медведица',aria:'Малая Медведица в 3D: потяни, чтобы повернуть; выбери звезду'},
+en:{date:'Any clear night, ideally moonless',time:'',place:'North, altitude above the horizon equals your latitude',lw:'When',lp:'Where',title:'Ursa Minor',aria:'Ursa Minor in 3D: drag to rotate; pick a star'}};
+var EN={
+h1:'Ursa<br>Minor',
+pitch:'A glowing model of the constellation. Pick a star and see how far away it is.',
+btn:'How to find it',
+hint:'Drag to rotate the constellation',
+h_myth:'Myth',
+myth1:'The nymph Callisto was turned into a bear. Zeus lifted her and her son Arcas into the sky.',
+myth2:'In another version, the nymph Cynosura raised the infant Zeus and was placed among the stars in gratitude. Sailors steered by this constellation for centuries.',
+h_facts:'Fun facts',
+facts_big:'A modest constellation with a lot to be curious about.',
+f1t:'A star with a pulse',f1d:'Polaris is a pulsating variable star, a Cepheid. Its brightness changes slightly with a period of about four days. It is the Cepheid closest to us.',
+f2t:'A triple system',f2d:'Polaris is not one star but three: a bright supergiant and two companions. It is about 2,000 times brighter than the Sun.',
+f3t:'Guardians of the pole',f3d:'Kochab and Pherkad circle the celestial pole and have long been called the “Guardians of the Pole”. About 3,000 years ago Kochab was the bright star closest to the pole.',
+f4t:'The pole moves on',f4d:'Polaris comes closest to the celestial pole around the year 2100. Then it will start drifting away, and in ~12,000 years Vega will take its place.',
+f5t:'Arabic names',f5d:'The name Kochab comes from an Arabic word for “star”, and Pherkad means “calf”. Most star names came to us from Arabic astronomy.',
+f6t:'A meteor shower',f6d:'Every December, around the 22nd, the Ursid meteors radiate from this constellation. They were produced by comet Tuttle.',
+f7t:'A dwarf neighbor',f7d:'Ursa Minor has a dwarf galaxy, a satellite of the Milky Way. It is about 200,000 light-years away and can only be seen with a large telescope.',
+h_obs:'Observing',
+obs_big:'Ursa Minor is visible all year round. All you need is a clear night.',
+obs1:'<b>Where.</b> Look north. The altitude of Polaris above the horizon equals the latitude of where you stand. The farther north, the higher it is overhead. Polaris sits at the end of the dipper’s “handle”, almost exactly above the celestial north pole.',
+obs2:'<b>How to find it.</b> Find the Big Dipper. Draw a line through the two outer stars of its “bowl” and extend it five times that distance. You land on Polaris. Cassiopeia, the W-shaped figure, also helps. Polaris, Kochab and Pherkad are easy to see; the other four stars are fainter.',
+obs3:'<b>When.</b> Best on a moonless night far from city lights: the Moon and light pollution hide faint stars. The constellation rotates around Polaris, so the dipper changes position through the night and the year, but never disappears.',
+h_phys:'Physics',
+phys_big:'Polaris barely moves across the sky. That is why it points north.',
+p1t:'North',p1d:'The star sits almost exactly above the celestial north pole.',
+p2t:'Latitude',p2d:'The altitude of Polaris above the horizon equals your latitude.',
+p3t:'Color',p3d:'Hot stars are white, cool ones are orange.',
+p4t:'Perspective',p4d:'The stars of the dipper lie at different distances. Seen from another side, the figure would look different.',
+p5t:'Changing pole',p5d:'In ~12,000 years Vega will take over the role of Polaris.',
+h_stars:'Stars',
+th1:'Star',th2:'Light-years',th3:'Color',
+tn0:'Polaris',tn1:'Kochab',tn2:'Pherkad',tn3:'Yildun',tn4:'Urodelus',tn5:'Alifa',tn6:'Anwar',
+tc0:'yellow-white',tc1:'orange',tc2:'white',tc3:'white',tc4:'yellow',tc5:'white',tc6:'yellow-white',
+approx:'Distances are approximate.',
+h_space:'Space',
+space_big:'Spacecraft also navigate by the stars.',
+space_p:'A star tracker photographs a patch of sky and compares it with a catalog. That is how the craft knows its orientation. Stars are so distant that for navigation they stay fixed, like beacons. The idea is the same as sailors using Polaris.',
+a1:'Crew Dragon launch on a Falcon 9 rocket, NASA photo',
+a2:'Soyuz rocket launch from Baikonur, NASA photo',
+a3:'Falcon 9 launch, NASA photo',
+a4:'Soyuz rocket launch, NASA photo'};
+var RU={},RUA={};
+document.querySelectorAll('[data-i]').forEach(function(e){RU[e.getAttribute('data-i')]=e.innerHTML});
+document.querySelectorAll('[data-ia]').forEach(function(e){RUA[e.getAttribute('data-ia')]=e.getAttribute('alt')});
 
+function detect(){
+try{var s=localStorage.getItem('lang');if(s&&LANGS.indexOf(s)>-1)return s}catch(e){}
+var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];
+for(var i=0;i<ls.length;i++){var b=String(ls[i]).toLowerCase().split('-')[0];if(b==='en')return 'en';if(RU_LIKE.indexOf(b)>-1)return 'ru'}
+return 'en'}
+
+function renderWhen(){
+var E=EVENTS[L];
+document.querySelectorAll('.when').forEach(function(w){
+w.innerHTML='';
+function item(l,v){var d=document.createElement('div'),s=document.createElement('span'),b=document.createElement('b');s.textContent=l;b.textContent=v;d.appendChild(s);d.appendChild(b);w.appendChild(d)}
+item(E.lw,E.date+(E.time?', '+E.time:''));item(E.lp,E.place)})}
+
+/* ---------- stars ---------- */
 var S=[
 {n:'Полярная',x:71,y:122,r:6.5,ly:430,c:'жёлто-белая',h:'#fff1c9',l:[0,19,'middle']},
 {n:'Иилдун',x:112,y:136,r:3.5,ly:170,c:'белая',h:'#ffffff',l:[0,19,'middle']},
@@ -219,6 +288,8 @@ var S=[
 {n:'Анвар',x:251.5,y:140,r:3.5,ly:100,c:'жёлто-белая',h:'#fff1c9',l:[0,19,'middle']},
 {n:'Феркад',x:299,y:94.6,r:4.5,ly:490,c:'белая',h:'#ffffff',l:[0,19,'middle']},
 {n:'Кохаб',x:266.5,y:78.5,r:5.5,ly:130,c:'оранжевая',h:'#ffb070',l:[0,-13,'middle']}];
+var NAMES={ru:S.map(function(q){return q.n}),en:['Polaris','Yildun','Urodelus','Alifa','Anwar','Pherkad','Kochab']};
+var COLORS={ru:S.map(function(q){return q.c}),en:['yellow-white','white','yellow','white','yellow-white','white','orange']};
 var order=[0,1,2,3,4,5,6,3];
 S.forEach(function(q){q.Z=(q.ly-300)*.5;var f=(q.Z+520)/520;q.X=(q.x-185)*1.3*f;q.Y=(q.y-110)*1.3*f});
 var info=$('pop');
@@ -229,10 +300,30 @@ function lay(){var cb=c.getBoundingClientRect(),tb=document.querySelector('.hero
 SC=Math.max(.3,Math.min((m?W*.88:W*.5)/330,(y1-y0)/165));OX=m?0:W*.2;OY=(y0+y1)/2-H/2-14*SC}
 function pr(X,Y,Z){var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pit),sn=Math.sin(pit),a=X*cy+Z*sy,z1=-X*sy+Z*cy,b=Y*cp-z1*sn,z2=Y*sn+z1*cp,dp=z2+CAM;
 if(dp<60)return null;var k=F/dp*SC;return{x:W/2+OX+a*k,y:H/2+OY+b*k,k:k}}
-function show(i){var st=S[i],y=new Date().getFullYear()-st.ly,v=st.ly*299792/17;
-var tt=v>=1e6?(v/1e6).toFixed(1).replace('.',',')+' млн лет':Math.round(v/1000)+' тыс. лет';
+function show(i){var st=S[i],y=new Date().getFullYear()-st.ly,v=st.ly*299792/17,en=L==='en',tt;
+if(en)tt=v>=1e6?(v/1e6).toFixed(1)+' million years':Math.round(v/1000).toLocaleString('en-US')+' thousand years';
+else tt=v>=1e6?(v/1e6).toFixed(1).replace('.',',')+' млн лет':Math.round(v/1000)+' тыс. лет';
 info.innerHTML='';var b=document.createElement('b');b.textContent=st.n;info.appendChild(b);
-['Расстояние: около '+st.ly+' световых лет, цвет '+st.c,'Свет, который ты видишь, вышел из звезды в '+y+' году','На скорости Вояджера-1 (около 17 км/с) лететь пришлось бы '+tt].forEach(function(z){var p=document.createElement('span');p.textContent=z;info.appendChild(p)})}
+var lines=en?['Distance: about '+st.ly+' light-years, color '+st.c,'The light you see left the star in the year '+y,'At Voyager 1’s speed (about 17 km/s) the trip would take '+tt]
+:['Расстояние: около '+st.ly+' световых лет, цвет '+st.c,'Свет, который ты видишь, вышел из звезды в '+y+' году','На скорости Вояджера-1 (около 17 км/с) лететь пришлось бы '+tt];
+lines.forEach(function(z){var p=document.createElement('span');p.textContent=z;info.appendChild(p)})}
+
+function setLang(l,save){
+if(LANGS.indexOf(l)<0)l='ru';L=l;
+document.documentElement.lang=l;
+document.title=EVENTS[l].title;
+c.setAttribute('aria-label',EVENTS[l].aria);
+document.querySelectorAll('[data-i]').forEach(function(e){var k=e.getAttribute('data-i');e.innerHTML=(l==='ru'?RU[k]:(EN[k]!==undefined?EN[k]:RU[k]))});
+document.querySelectorAll('[data-ia]').forEach(function(e){var k=e.getAttribute('data-ia');e.setAttribute('alt',l==='ru'?RUA[k]:(EN[k]||RUA[k]))});
+S.forEach(function(q,i){q.n=NAMES[l][i];q.c=COLORS[l][i]});
+renderWhen();
+var sw=$('lang');sw.setAttribute('data-lang',l);
+sw.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-l')===l?'true':'false')});
+if(save){try{localStorage.setItem('lang',l)}catch(e){}}
+if(cur>=0)show(cur);
+if(W)lay();
+if(red)draw()}
+
 var hideT=0;
 function shut(){clearTimeout(hideT);cur=-1;if(red)draw()}
 function go(i){clearTimeout(hideT);if(i===cur){shut();return}cur=i;show(i);selT=performance.now();hideT=setTimeout(shut,7000);if(red)draw()}
@@ -248,7 +339,7 @@ sp=[];S.forEach(function(st,i){var q=pr(st.X,st.Y,st.Z);sp[i]=q;if(!q)return;
 var rr=st.r*Math.min(q.k,2.2)*.42,sel=i===cur,col=sel?'#ff8a3d':st.h;
 x.shadowColor=col;x.shadowBlur=rr*4+6;x.fillStyle=col;x.beginPath();x.arc(q.x,q.y,rr*(sel?1.5:1),0,6.283);x.fill();x.shadowBlur=0;
 var ph=now-selT;if(i===cur&&ph<1100){var rt=ph/1100;x.globalAlpha=1-rt;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(q.x,q.y,rr+rt*rr*7,0,6.283);x.stroke();x.globalAlpha=1}
-x.fillStyle=sel?'#fff':'#fff';x.font=Math.max(11,Math.min(15,10+q.k*2.2))+'px "Exo 2",sans-serif';var A=st.l[2];x.textAlign=A;
+x.fillStyle='#fff';x.font=Math.max(11,Math.min(15,10+q.k*2.2))+'px "Exo 2",sans-serif';var A=st.l[2];x.textAlign=A;
 var dx=A==='start'?rr+9:A==='end'?-(rr+9):0,dy=A==='middle'?(st.l[1]<0?-(rr+9):rr+19):4;x.fillText(st.n,q.x+dx,q.y+dy)});
 
 var cq=cur>=0?sp[cur]:null;
@@ -256,8 +347,8 @@ if(cq){var pw=info.offsetWidth,ph2=info.offsetHeight,rr2=S[cur].r*Math.min(cq.k,
 sp.forEach(function(q){if(q){cyS+=q.y;cn++}});up=cq.y<cyS/cn;
 if(up&&cq.y-ph2-gap-rr2<84)up=false;else if(!up&&cq.y+rr2+gap+ph2>H-8)up=true;
 var
-L=Math.max(8,Math.min(W-pw-8,cq.x-pw/2)),T=up?cq.y-rr2-gap-ph2:cq.y+rr2+gap,ax=Math.max(L+10,Math.min(L+pw-10,cq.x)),ay=up?T+ph2:T;
-info.style.transform='translate('+Math.round(L)+'px,'+Math.round(T)+'px)';info.classList.add('on');
+L2=Math.max(8,Math.min(W-pw-8,cq.x-pw/2)),T=up?cq.y-rr2-gap-ph2:cq.y+rr2+gap,ax=Math.max(L2+10,Math.min(L2+pw-10,cq.x)),ay=up?T+ph2:T;
+info.style.transform='translate('+Math.round(L2)+'px,'+Math.round(T)+'px)';info.classList.add('on');
 x.strokeStyle='#ff8a3d';x.lineWidth=1;x.beginPath();x.moveTo(cq.x,cq.y+(up?-rr2:rr2));x.lineTo(ax,ay);x.stroke()}else info.classList.remove('on');
 if(!red&&!document.hidden)requestAnimationFrame(draw)}
 
@@ -269,8 +360,12 @@ if(red)draw()});
 c.addEventListener('pointerup',function(e){var r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
 if(drag&&moved<6){var b=-1,bd=1e9;sp.forEach(function(q,i){if(!q)return;var d=Math.hypot(q.x-mx,q.y-my);if(d<bd){bd=d;b=i}});if(b>=0&&bd<34)go(b);else shut()}drag=null});
 c.addEventListener('pointercancel',function(){drag=null});
+
+$('lang').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setLang(b.getAttribute('data-l'),true)});
+
 addEventListener('resize',function(){rs();if(red)draw()});
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&!red)requestAnimationFrame(draw)});
+setLang(detect(),false);
 rs();draw();addEventListener('load',function(){rs();if(red)draw()});if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){lay();if(red)draw()});
 })();
 </script>
