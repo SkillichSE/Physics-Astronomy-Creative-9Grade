@@ -78,6 +78,7 @@ nav{display:none}
 .info span{display:block;color:var(--mute)}
 @media(prefers-reduced-motion:reduce){.ring{animation:none}}
 
+/* hero 3D */
 .hero,.hero .txt,.hero .bot{pointer-events:none}
 .hero .btn,.hero .chip{pointer-events:auto}
 .hero{display:flex;flex-direction:column;justify-content:space-between;min-height:100svh;padding:84px 20px 22px}
@@ -101,11 +102,10 @@ nav{display:none}
 .facts div{padding:22px 20px 22px 0}
 .facts .num{display:block;color:var(--hot);font-size:12px;letter-spacing:.2em;margin-bottom:6px}
 
-.pop{position:absolute;left:0;top:0;z-index:2;width:max-content;max-width:min(270px,calc(100% - 16px));pointer-events:none;background:rgba(0,0,0,.88);border:1px solid var(--hot);padding:10px 14px;font-size:13px;line-height:1.45;opacity:0;transition:opacity .2s}
+.pop{position:absolute;left:0;top:0;z-index:2;width:max-content;max-width:min(270px,calc(100% - 16px));pointer-events:none;background:rgba(0,0,0,.88);border:1px solid var(--hot);padding:8px 12px;font-size:12px;line-height:1.4;opacity:0;transition:opacity .2s}
 .pop.on{opacity:1}
-.pop b{display:block;font-weight:600;font-size:16px;margin-bottom:3px}
+.pop b{display:block;font-weight:600;font-size:14px;margin-bottom:3px}
 .pop span{display:block;color:var(--mute)}
-
 .hero{gap:32px}
 .hero .txt{padding-bottom:8px}
 .hero .row{margin-bottom:0}
@@ -234,7 +234,9 @@ function show(i){var st=S[i],y=new Date().getFullYear()-st.ly,v=st.ly*299792/17;
 var tt=v>=1e6?(v/1e6).toFixed(1).replace('.',',')+' млн лет':Math.round(v/1000)+' тыс. лет';
 info.innerHTML='';var b=document.createElement('b');b.textContent=st.n;info.appendChild(b);
 ['Расстояние: около '+st.ly+' световых лет, цвет '+st.c,'Свет, который ты видишь, вышел из звезды в '+y+' году','На скорости Вояджера-1 (около 17 км/с) лететь пришлось бы '+tt].forEach(function(z){var p=document.createElement('span');p.textContent=z;info.appendChild(p)})}
-function go(i){cur=i;show(i);selT=performance.now();if(red)draw()}
+var hideT=0;
+function shut(){clearTimeout(hideT);cur=-1;if(red)draw()}
+function go(i){clearTimeout(hideT);if(i===cur){shut();return}cur=i;show(i);selT=performance.now();hideT=setTimeout(shut,7000);if(red)draw()}
 function draw(now){now=now||performance.now();t+=.016;
 var tx=yT+(red?0:Math.sin(t*.3)*.12),ty=pT+(red?0:Math.cos(t*.25)*.04);yaw+=(tx-yaw)*(red?1:.05);pit+=(ty-pit)*(red?1:.05);
 x.clearRect(0,0,W,H);
@@ -242,7 +244,7 @@ bg.forEach(function(b){var q=pr(b[0],b[1],b[2]);if(!q||q.x<-5||q.x>W+5||q.y<-5||
 x.globalAlpha=1;
 var pts=order.map(function(i){return pr(S[i].X,S[i].Y,S[i].Z)});
 if(pts.every(Boolean)){x.strokeStyle='rgba(255,255,255,.45)';x.lineWidth=1;x.beginPath();pts.forEach(function(p,j){j?x.lineTo(p.x,p.y):x.moveTo(p.x,p.y)});x.stroke()}
-
+/* звёзды */
 sp=[];S.forEach(function(st,i){var q=pr(st.X,st.Y,st.Z);sp[i]=q;if(!q)return;
 var rr=st.r*Math.min(q.k,2.2)*.42,sel=i===cur,col=sel?'#ff8a3d':st.h;
 x.shadowColor=col;x.shadowBlur=rr*4+6;x.fillStyle=col;x.beginPath();x.arc(q.x,q.y,rr*(sel?1.5:1),0,6.283);x.fill();x.shadowBlur=0;
@@ -251,7 +253,10 @@ x.fillStyle=sel?'#fff':'#fff';x.font=Math.max(11,Math.min(15,10+q.k*2.2))+'px "E
 var dx=A==='start'?rr+9:A==='end'?-(rr+9):0,dy=A==='middle'?(st.l[1]<0?-(rr+9):rr+19):4;x.fillText(st.n,q.x+dx,q.y+dy)});
 
 var cq=cur>=0?sp[cur]:null;
-if(cq){var pw=info.offsetWidth,ph2=info.offsetHeight,rr2=S[cur].r*Math.min(cq.k,2.2)*.42*1.5,gap=26,up=cq.y-ph2-gap-rr2>84,
+if(cq){var pw=info.offsetWidth,ph2=info.offsetHeight,rr2=S[cur].r*Math.min(cq.k,2.2)*.42*1.5,gap=18,cyS=0,cn=0,up;
+sp.forEach(function(q){if(q){cyS+=q.y;cn++}});up=cq.y<cyS/cn;
+if(up&&cq.y-ph2-gap-rr2<84)up=false;else if(!up&&cq.y+rr2+gap+ph2>H-8)up=true;
+var
 L=Math.max(8,Math.min(W-pw-8,cq.x-pw/2)),T=up?cq.y-rr2-gap-ph2:cq.y+rr2+gap,ax=Math.max(L+10,Math.min(L+pw-10,cq.x)),ay=up?T+ph2:T;
 info.style.transform='translate('+Math.round(L)+'px,'+Math.round(T)+'px)';info.classList.add('on');
 x.strokeStyle='#ff8a3d';x.lineWidth=1;x.beginPath();x.moveTo(cq.x,cq.y+(up?-rr2:rr2));x.lineTo(ax,ay);x.stroke()}else info.classList.remove('on');
@@ -263,12 +268,11 @@ c.addEventListener('pointermove',function(e){if(drag){var dx=e.clientX-drag.x,dy
 else if(e.pointerType==='mouse'){yT=(e.clientX/W-.5)*.5;pT=(e.clientY/H-.5)*.3}
 if(red)draw()});
 c.addEventListener('pointerup',function(e){var r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
-if(drag&&moved<6){var b=-1,bd=1e9;sp.forEach(function(q,i){if(!q)return;var d=Math.hypot(q.x-mx,q.y-my);if(d<bd){bd=d;b=i}});if(b>=0&&bd<34)go(b)}drag=null});
+if(drag&&moved<6){var b=-1,bd=1e9;sp.forEach(function(q,i){if(!q)return;var d=Math.hypot(q.x-mx,q.y-my);if(d<bd){bd=d;b=i}});if(b>=0&&bd<34)go(b);else shut()}drag=null});
 c.addEventListener('pointercancel',function(){drag=null});
 addEventListener('resize',function(){rs();if(red)draw()});
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&!red)requestAnimationFrame(draw)});
 rs();draw();addEventListener('load',function(){rs();if(red)draw()});if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){lay();if(red)draw()});
-setTimeout(function(){if(cur<0)go(0)},900);
 })();
 </script>
 </body>
